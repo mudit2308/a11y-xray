@@ -1,0 +1,26 @@
+{
+  "manifest_version": 3,
+  "name": "A11y X-Ray: see the web through other eyes",
+  "short_name": "A11y X-Ray",
+  "version": "1.0.0",
+  "description": "Simulate color blindness, low vision, tremor, dyslexia and screen readers on any website, then audit it for accessibility problems.",
+  "homepage_url": "https://mudit2308.github.io/a11y-xray/",
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_title": "A11y X-Ray",
+    "default_icon": {
+      "16": "icons/icon-16.png",
+      "32": "icons/icon-32.png",
+      "48": "icons/icon-48.png",
+      "128": "icons/icon-128.png"
+    }
+  },
+  "icons": {
+    "16": "icons/icon-16.png",
+    "32": "icons/icon-32.png",
+    "48": "icons/icon-48.png",
+    "128": "icons/icon-128.png"
+  },
+  "permissions": ["activeTab", "scripting", "storage"],
+  "minimum_chrome_version": "102"
+}

@@ -1,0 +1,16 @@
+{
+  "name": "a11y-xray",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Chrome extension that simulates disabilities on any website and audits it for accessibility problems.",
+  "scripts": {
+    "start": "npx --yes serve .",
+    "test": "node --test test/color.test.cjs",
+    "test:e2e": "node --test test/e2e.test.cjs",
+    "zip": "cd extension && zip -r ../a11y-xray.zip . -x '.*'"
+  },
+  "devDependencies": {
+    "playwright": "^1.56.0"
+  },
+  "license": "MIT"
+}

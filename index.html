@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>A11y X-Ray: see the web through other people's eyes</title>
+    <meta name="description" content="A free Chrome extension that simulates color blindness, low vision, hand tremor, dyslexia and screen readers on any website, and audits it for accessibility problems." />
+    <meta property="og:title" content="A11y X-Ray" />
+    <meta property="og:description" content="See the web through other people's eyes. Free, open-source accessibility extension for Chrome." />
+    <meta property="og:image" content="extension/icons/icon-128.png" />
+    <meta name="theme-color" content="#4338ca" />
+    <link rel="icon" href="site/icon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="site/site.css" />
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to content</a>
+
+    <header class="nav">
+      <a class="logo" href="./" aria-label="A11y X-Ray home">
+        <img src="extension/icons/icon-48.png" alt="" width="30" height="30" />
+        <span>A11y X-Ray</span>
+      </a>
+      <nav aria-label="Main">
+        <ul>
+          <li><a href="#demo">Live demo</a></li>
+          <li><a href="#features">Features</a></li>
+          <li><a href="#how">How it works</a></li>
+          <li><a class="nav-cta" href="#install">Install free</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main id="main">
+      <!-- Hero -->
+      <section class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">Free Chrome extension · Open source · No data collected</p>
+          <h1>See the web through <span class="grad">other people's eyes.</span></h1>
+          <p class="lede">A11y X-Ray simulates color blindness, blurry vision, hand tremor, dyslexia and screen readers on any website, then audits it for the barriers you just felt.</p>
+          <div class="ctas">
+            <a class="btn primary" href="#install">Install for Chrome</a>
+            <a class="btn" href="#demo">Try the live demo ↓</a>
+          </div>
+          <p class="stat"><strong>1.3 billion</strong> people, about 1 in 6, live with a significant disability <span class="src">(WHO, 2023)</span>. Most websites are built without them in mind.</p>
+        </div>
+
+        <figure class="compare" id="compare">
+          <div class="compare-stage">
+            <div class="mini" aria-hidden="true">
+              <div class="mini-head"><b>Order status</b><span>#4821</span></div>
+              <div class="mini-row"><span class="pill ok">● Delivered</span><span class="pill bad">● Payment failed</span></div>
+              <div class="mini-chart">
+                <span style="--h: 40%; --c: #16a34a"></span><span style="--h: 70%; --c: #dc2626"></span><span style="--h: 55%; --c: #16a34a"></span><span style="--h: 85%; --c: #dc2626"></span><span style="--h: 35%; --c: #16a34a"></span><span style="--h: 60%; --c: #dc2626"></span>
+              </div>
+              <div class="mini-legend"><span><i style="background: #16a34a"></i>On time</span><span><i style="background: #dc2626"></i>Late</span></div>
+            </div>
+            <div class="mini mini-after" aria-hidden="true">
+              <div class="mini-head"><b>Order status</b><span>#4821</span></div>
+              <div class="mini-row"><span class="pill ok">● Delivered</span><span class="pill bad">● Payment failed</span></div>
+              <div class="mini-chart">
+                <span style="--h: 40%; --c: #16a34a"></span><span style="--h: 70%; --c: #dc2626"></span><span style="--h: 55%; --c: #16a34a"></span><span style="--h: 85%; --c: #dc2626"></span><span style="--h: 35%; --c: #16a34a"></span><span style="--h: 60%; --c: #dc2626"></span>
+              </div>
+              <div class="mini-legend"><span><i style="background: #16a34a"></i>On time</span><span><i style="background: #dc2626"></i>Late</span></div>
+            </div>
+            <div class="compare-handle" aria-hidden="true"><span>⇆</span></div>
+            <span class="tag tag-left" aria-hidden="true">Typical vision</span>
+            <span class="tag tag-right" aria-hidden="true">Green-blind</span>
+          </div>
+          <label class="compare-range">
+            <span class="sr-only">Compare typical vision with green-blindness</span>
+            <input type="range" id="compare-range" min="0" max="100" value="50" />
+          </label>
+          <figcaption>Drag to compare. With deuteranopia, "Delivered" and "Payment failed" look the same, and so do the chart colors.</figcaption>
+        </figure>
+      </section>
+
+      <!-- Demo -->
+      <section class="demo" id="demo" aria-labelledby="demo-title">
+        <div class="section-head">
+          <p class="eyebrow">Live demo</p>
+          <h2 id="demo-title">Try it right here, no install needed</h2>
+          <p>This sample booking page has a few common mistakes hidden in it. Turn on a simulation, then run the audit to find them.</p>
+        </div>
+
+        <div class="demo-grid">
+          <div class="controls" role="group" aria-label="Simulation controls">
+            <fieldset>
+              <legend>Color vision</legend>
+              <div class="chips" id="demo-vision">
+                <label><input type="radio" name="dv" value="none" checked /><span>Typical</span></label>
+                <label><input type="radio" name="dv" value="protanopia" /><span>Red-blind</span></label>
+                <label><input type="radio" name="dv" value="deuteranopia" /><span>Green-blind</span></label>
+                <label><input type="radio" name="dv" value="tritanopia" /><span>Blue-blind</span></label>
+                <label><input type="radio" name="dv" value="achromatopsia" /><span>No color</span></label>
+              </div>
+            </fieldset>
+            <label class="ctl">Blurry vision <input type="range" id="demo-blur" min="0" max="6" value="0" /></label>
+            <label class="ctl">Contrast loss <input type="range" id="demo-contrast" min="0" max="80" step="10" value="0" /></label>
+            <label class="ctl check"><input type="checkbox" id="demo-tunnel" /> Tunnel vision</label>
+            <label class="ctl check"><input type="checkbox" id="demo-dyslexia" /> Dyslexia</label>
+            <label class="ctl">Hand tremor
+              <select id="demo-tremor">
+                <option value="0">Off</option>
+                <option value="1">Mild</option>
+                <option value="2">Moderate</option>
+                <option value="3">Severe</option>
+              </select>
+            </label>
+            <div class="ctl-buttons">
+              <button type="button" class="btn small" id="demo-reader">🔊 Screen reader view</button>
+              <button type="button" class="btn small primary" id="demo-audit">Run audit</button>
+              <button type="button" class="btn small ghost" id="demo-reset">Reset</button>
+            </div>
+          </div>
+
+          <div class="stage-wrap">
+            <div class="stage" id="stage" aria-label="Sample website">
+              <div class="s-top">
+                <div class="s-logo"><img src="site/hotel.svg" width="28" height="28" /> Stayzy</div>
+                <div class="s-icons"><button class="s-icon" type="button"><svg width="14" height="14" viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9A5.5 5.5 0 0 1 12 6a5.5 5.5 0 0 1 9.5 6c-2.5 4.5-9.5 9-9.5 9z" fill="none" stroke="currentColor" stroke-width="2"/></svg></button><button class="s-icon" type="button"><svg width="14" height="14" viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2"/></svg></button></div>
+              </div>
+              <div class="s-hero">
+                <h3>Find your next stay</h3>
+                <p class="s-faint">Over 2 million homes, hotels and more.</p>
+              </div>
+              <div class="s-form">
+                <input type="text" placeholder="Where to?" />
+                <input type="text" placeholder="Dates" />
+                <button type="button" class="s-go">Search</button>
+              </div>
+              <div class="s-cards">
+                <article class="s-card">
+                  <img src="site/room-1.svg" width="240" height="120" />
+                  <div class="s-card-body">
+                    <h4>Seaside Loft, Goa</h4>
+                    <p><span class="avail yes">● Available</span> <span class="price">₹4,200/night</span></p>
+                    <a href="#demo">More</a>
+                  </div>
+                </article>
+                <article class="s-card">
+                  <img src="site/room-2.svg" width="240" height="120" />
+                  <div class="s-card-body">
+                    <h4>Hilltop Cabin, Manali</h4>
+                    <p><span class="avail no">● Sold out</span> <span class="price">₹3,100/night</span></p>
+                    <a href="#demo">More</a>
+                  </div>
+                </article>
+              </div>
+            </div>
+            <p class="stage-note">↑ A deliberately flawed sample page. Simulations only affect this box.</p>
+          </div>
+
+          <div class="report" id="report" aria-live="polite">
+            <div class="report-empty">
+              <div class="report-icon" aria-hidden="true">🩺</div>
+              <p>Run the audit to see what's wrong with this page, and why it matters.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Features -->
+      <section class="features" id="features" aria-labelledby="features-title">
+        <div class="section-head">
+          <p class="eyebrow">Features</p>
+          <h2 id="features-title">Feel the barrier first. Then fix it.</h2>
+        </div>
+        <ul class="feature-grid">
+          <li><span class="f-ico" aria-hidden="true">🎨</span><h3>4 types of color blindness</h3><p>Red-, green- and blue-blindness plus total color blindness, using the Machado (2009) color science model.</p></li>
+          <li><span class="f-ico" aria-hidden="true">🔍</span><h3>Low vision</h3><p>Adjustable blur and contrast loss, and tunnel vision that only shows the area around your mouse.</p></li>
+          <li><span class="f-ico" aria-hidden="true">✋</span><h3>Hand tremor</h3><p>Your cursor shakes and clicks land where it shakes to. Small buttons suddenly become very hard to hit.</p></li>
+          <li><span class="f-ico" aria-hidden="true">📖</span><h3>Dyslexia</h3><p>Letters inside words keep moving around, like many people with dyslexia describe reading.</p></li>
+          <li><span class="f-ico" aria-hidden="true">🔊</span><h3>Screen reader view</h3><p>The page as a blind user hears it, in order, with read-aloud and a "hide the screen" mode.</p></li>
+          <li><span class="f-ico" aria-hidden="true">🩺</span><h3>Accessibility audit</h3><p>19 WCAG 2.2 checks with a score, plain-English fixes and click-to-highlight on the page.</p></li>
+          <li><span class="f-ico" aria-hidden="true">📋</span><h3>Shareable report</h3><p>Copy the audit as Markdown and paste it into a GitHub issue, Jira ticket or Slack.</p></li>
+          <li><span class="f-ico" aria-hidden="true">🔒</span><h3>100% private</h3><p>Runs only on the tab you click it on. No servers, no tracking, no data leaves your browser.</p></li>
+        </ul>
+      </section>
+
+      <!-- How it works -->
+      <section class="how" id="how" aria-labelledby="how-title">
+        <div class="section-head">
+          <p class="eyebrow">How it works</p>
+          <h2 id="how-title">Built with zero dependencies</h2>
+        </div>
+        <div class="how-grid">
+          <div class="how-card">
+            <h3>Color blindness: real color science</h3>
+            <p>Each type is a 3×3 matrix from Machado, Oliveira &amp; Fernandes (2009), applied in linear RGB through an SVG <code>feColorMatrix</code> filter.</p>
+          </div>
+          <div class="how-card">
+            <h3>Filters that leave the tool sharp</h3>
+            <p>Effects go on a transparent full-screen layer using <code>backdrop-filter</code>, so the page changes but the extension's own panels stay readable.</p>
+          </div>
+          <div class="how-card">
+            <h3>Audit: WCAG 2.2 rules</h3>
+            <p>Contrast uses the WCAG luminance formula, with text blended over its real background. Button and link names follow the W3C accessible name algorithm (simplified).</p>
+          </div>
+          <div class="how-card">
+            <h3>Manifest V3, minimal permissions</h3>
+            <p>Only <code>activeTab</code>, <code>scripting</code> and <code>storage</code>. The extension can't see any page until you click it.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Install -->
+      <section class="install" id="install" aria-labelledby="install-title">
+        <div class="section-head">
+          <p class="eyebrow">Install</p>
+          <h2 id="install-title">Install in under a minute</h2>
+          <p>Free and open source. Works in Chrome, Edge, Brave and other Chromium browsers.</p>
+        </div>
+        <ol class="steps">
+          <li><span class="n">1</span><div><h3>Download</h3><p><a href="https://github.com/mudit2308/a11y-xray/archive/refs/heads/main.zip">Download the ZIP</a> and unzip it.</p></div></li>
+          <li><span class="n">2</span><div><h3>Open extensions</h3><p>Go to <code>chrome://extensions</code> and switch on <b>Developer mode</b> (top right).</p></div></li>
+          <li><span class="n">3</span><div><h3>Load it</h3><p>Click <b>Load unpacked</b> and choose the <code>extension</code> folder inside the download.</p></div></li>
+          <li><span class="n">4</span><div><h3>Pin and play</h3><p>Pin A11y X-Ray from the 🧩 menu, open any website and click the icon.</p></div></li>
+        </ol>
+        <div class="install-cta">
+          <a class="btn primary" href="https://github.com/mudit2308/a11y-xray/archive/refs/heads/main.zip">Download A11y X-Ray</a>
+          <a class="btn" href="https://github.com/mudit2308/a11y-xray">View source on GitHub</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="foot">
+      <p>Built by <a href="https://github.com/mudit2308">Mudit Pathak</a> · A11y X-Ray is a learning and empathy tool. Automated checks catch many problems, but not all, so always test with real people.</p>
+    </footer>
+
+    <script src="extension/content/color.js"></script>
+    <script src="extension/content/audit.js"></script>
+    <script src="extension/content/simulate.js"></script>
+    <script src="extension/content/reader.js"></script>
+    <script src="site/site.js"></script>
+  </body>
+</html>

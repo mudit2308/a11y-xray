@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>A11y X-Ray</title>
+    <link rel="stylesheet" href="popup.css" />
+    <script type="module" src="popup.js"></script>
+  </head>
+  <body>
+    <header class="top">
+      <div class="brand">
+        <img src="../icons/icon-32.png" alt="" width="26" height="26" />
+        <div>
+          <strong>A11y X-Ray</strong>
+          <span id="host" class="host">this page</span>
+        </div>
+      </div>
+      <button type="button" id="reset" class="ghost" title="Turn off all simulations">Reset</button>
+    </header>
+
+    <nav class="tabs" role="tablist" aria-label="Mode">
+      <button type="button" role="tab" id="tab-simulate" aria-controls="panel-simulate" aria-selected="true">Simulate</button>
+      <button type="button" role="tab" id="tab-audit" aria-controls="panel-audit" aria-selected="false">Audit</button>
+      <span class="tab-ink" aria-hidden="true"></span>
+    </nav>
+
+    <p id="blocked" class="blocked" hidden>
+      <strong>Can't run here.</strong> Chrome doesn't let extensions change its own pages (like chrome:// or the Web Store). Open any normal website and try again.
+    </p>
+
+    <!-- SIMULATE -->
+    <section id="panel-simulate" role="tabpanel" aria-labelledby="tab-simulate" class="panel">
+      <fieldset class="group">
+        <legend><span class="ico">👁️</span>Color vision</legend>
+        <div class="vision" role="radiogroup" aria-label="Color vision">
+          <label><input type="radio" name="vision" value="none" checked /><span><i class="sw sw-none"></i>Typical</span></label>
+          <label><input type="radio" name="vision" value="protanopia" /><span><i class="sw sw-pro"></i>Red-blind</span></label>
+          <label><input type="radio" name="vision" value="deuteranopia" /><span><i class="sw sw-deu"></i>Green-blind</span></label>
+          <label><input type="radio" name="vision" value="tritanopia" /><span><i class="sw sw-tri"></i>Blue-blind</span></label>
+          <label><input type="radio" name="vision" value="achromatopsia" /><span><i class="sw sw-ach"></i>No color</span></label>
+        </div>
+        <p class="fact" id="vision-fact">About 1 in 12 men and 1 in 200 women have some form of color blindness.</p>
+      </fieldset>
+
+      <fieldset class="group">
+        <legend><span class="ico">🔍</span>Low vision</legend>
+        <label class="slider">
+          <span>Blurry vision <output id="blur-out">Off</output></span>
+          <input type="range" id="blur" min="0" max="8" step="1" value="0" />
+        </label>
+        <label class="slider">
+          <span>Contrast loss <output id="contrast-out">Off</output></span>
+          <input type="range" id="contrast" min="0" max="80" step="10" value="0" />
+        </label>
+        <label class="switch">
+          <span><b>Tunnel vision</b><small>Only the area around the mouse is visible (glaucoma)</small></span>
+          <input type="checkbox" id="tunnel" role="switch" /><i></i>
+        </label>
+      </fieldset>
+
+      <fieldset class="group">
+        <legend><span class="ico">✋</span>Motor</legend>
+        <div class="seg" role="radiogroup" aria-label="Hand tremor">
+          <label><input type="radio" name="tremor" value="0" checked /><span>Off</span></label>
+          <label><input type="radio" name="tremor" value="1" /><span>Mild</span></label>
+          <label><input type="radio" name="tremor" value="2" /><span>Moderate</span></label>
+          <label><input type="radio" name="tremor" value="3" /><span>Severe</span></label>
+        </div>
+        <p class="fact">Hand tremor: the cursor shakes and clicks land where it shakes to. Try hitting a small button.</p>
+      </fieldset>
+
+      <fieldset class="group">
+        <legend><span class="ico">📖</span>Reading &amp; hearing</legend>
+        <label class="switch">
+          <span><b>Dyslexia</b><small>Letters inside words keep moving around</small></span>
+          <input type="checkbox" id="dyslexia" role="switch" /><i></i>
+        </label>
+        <label class="switch">
+          <span><b>Screen reader view</b><small>The page as a blind user hears it, with read-aloud</small></span>
+          <input type="checkbox" id="screenReader" role="switch" /><i></i>
+        </label>
+      </fieldset>
+    </section>
+
+    <!-- AUDIT -->
+    <section id="panel-audit" role="tabpanel" aria-labelledby="tab-audit" class="panel" hidden>
+      <div id="audit-empty" class="empty">
+        <div class="scan-art" aria-hidden="true"><span></span></div>
+        <h2>Check this page for barriers</h2>
+        <p>Scans for 19 common WCAG problems: missing alt text, unlabeled buttons, low contrast, tiny targets and more.</p>
+        <button type="button" id="scan" class="primary">Scan this page</button>
+      </div>
+
+      <div id="audit-results" hidden>
+        <div class="score-card">
+          <div class="ring" id="ring" style="--p: 0">
+            <svg viewBox="0 0 80 80" aria-hidden="true"><circle class="track" cx="40" cy="40" r="34" /><circle class="value" cx="40" cy="40" r="34" /></svg>
+            <span id="score">0</span>
+          </div>
+          <div class="score-text">
+            <strong id="score-label">—</strong>
+            <span id="score-sub"></span>
+            <div class="sev-row" id="sev-row"></div>
+          </div>
+        </div>
+
+        <div class="audit-tools">
+          <label class="switch small">
+            <span><b>Show on page</b></span>
+            <input type="checkbox" id="show-all" role="switch" /><i></i>
+          </label>
+          <button type="button" id="copy" class="ghost" title="Copy the report as Markdown">Copy</button>
+          <button type="button" id="rescan" class="ghost">Rescan</button>
+        </div>
+
+        <ul id="rules" class="rules"></ul>
+      </div>
+    </section>
+
+    <footer class="foot">
+      <span>🔒 Runs locally. Nothing leaves your browser.</span>
+      <a href="https://mudit2308.github.io/a11y-xray/" target="_blank" rel="noopener">About</a>
+    </footer>
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  </body>
+</html>
